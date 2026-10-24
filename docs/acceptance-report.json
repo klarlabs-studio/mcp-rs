@@ -1,0 +1,378 @@
+{
+  "scope": "MCP 2026-07-28 supported first-release scope; bounded checks, not exhaustive certification",
+  "started_at": "2026-10-24T08:38:23.763584+00:00",
+  "source_sha256": "6ef71eb3ca94a4d0e10e10e3b4b62f036ff4d93f0c4a242fd34d384cafd10cc7",
+  "requested_groups": [
+    "quality",
+    "features",
+    "tests",
+    "interop"
+  ],
+  "skipped_groups": [],
+  "status": "passed",
+  "finished_at": "2026-10-24T08:49:51.566052+00:00",
+  "workspace_tests": {
+    "passed": 412,
+    "suites": 46,
+    "ignored": 0
+  },
+  "tls_interoperability_cases": 36,
+  "checks": [
+    {
+      "group": "quality",
+      "name": "format",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 2.015
+    },
+    {
+      "group": "quality",
+      "name": "clippy",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 20.128
+    },
+    {
+      "group": "quality",
+      "name": "clippy-minimal",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.673
+    },
+    {
+      "group": "quality",
+      "name": "documentation",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 10.613
+    },
+    {
+      "group": "quality",
+      "name": "msrv",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 41.238
+    },
+    {
+      "group": "quality",
+      "name": "independent-engine",
+      "status": "passed"
+    },
+    {
+      "group": "features",
+      "name": "framework-0",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.436
+    },
+    {
+      "group": "features",
+      "name": "framework-1",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.4
+    },
+    {
+      "group": "features",
+      "name": "framework-2",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.514
+    },
+    {
+      "group": "features",
+      "name": "framework-3",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.385
+    },
+    {
+      "group": "features",
+      "name": "framework-4",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.443
+    },
+    {
+      "group": "features",
+      "name": "framework-5",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.608
+    },
+    {
+      "group": "features",
+      "name": "framework-6",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.57
+    },
+    {
+      "group": "features",
+      "name": "framework-7",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.571
+    },
+    {
+      "group": "features",
+      "name": "framework-8",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.639
+    },
+    {
+      "group": "features",
+      "name": "framework-9",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.616
+    },
+    {
+      "group": "features",
+      "name": "framework-10",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.646
+    },
+    {
+      "group": "features",
+      "name": "framework-11",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.632
+    },
+    {
+      "group": "features",
+      "name": "framework-12",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 6.753
+    },
+    {
+      "group": "features",
+      "name": "framework-13",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 8.349
+    },
+    {
+      "group": "features",
+      "name": "framework-14",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.477
+    },
+    {
+      "group": "features",
+      "name": "framework-15",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.911
+    },
+    {
+      "group": "features",
+      "name": "framework-16",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 5.943
+    },
+    {
+      "group": "features",
+      "name": "framework-17",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 7.153
+    },
+    {
+      "group": "features",
+      "name": "protocol-0",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.459
+    },
+    {
+      "group": "features",
+      "name": "protocol-1",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.367
+    },
+    {
+      "group": "features",
+      "name": "protocol-2",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.458
+    },
+    {
+      "group": "features",
+      "name": "protocol-3",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.789
+    },
+    {
+      "group": "tests",
+      "name": "workspace",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 495.125
+    },
+    {
+      "group": "tests",
+      "name": "examples",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 51.314
+    },
+    {
+      "group": "tests",
+      "name": "transport-smoke",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 2.098
+    },
+    {
+      "group": "tests",
+      "name": "typed-stdio",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.976
+    },
+    {
+      "group": "interop",
+      "name": "differential",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 1.289
+    },
+    {
+      "group": "interop",
+      "name": "network_interop",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.458
+    },
+    {
+      "group": "interop",
+      "name": "tls_interop",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 3.512
+    },
+    {
+      "group": "interop",
+      "name": "subscription_wire",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.141
+    },
+    {
+      "group": "interop",
+      "name": "go_subscription_interop",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.85
+    },
+    {
+      "group": "interop",
+      "name": "visibility_interop",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.132
+    },
+    {
+      "group": "interop",
+      "name": "server_metadata_interop",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.185
+    },
+    {
+      "group": "interop",
+      "name": "cache_interop",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.248
+    },
+    {
+      "group": "interop",
+      "name": "server_card_interop",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.465
+    },
+    {
+      "group": "interop",
+      "name": "skills_interop",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.529
+    },
+    {
+      "group": "interop",
+      "name": "discovery_interop",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.241
+    },
+    {
+      "group": "interop",
+      "name": "task_update_interop",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 1.328
+    },
+    {
+      "group": "interop",
+      "name": "task_input_interop",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 8.089
+    },
+    {
+      "group": "interop",
+      "name": "task_concurrency_interop",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.521
+    },
+    {
+      "group": "interop",
+      "name": "task_cancel_interop",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.7
+    },
+    {
+      "group": "interop",
+      "name": "prompt_resource_interop",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 1.038
+    },
+    {
+      "group": "interop",
+      "name": "go_mrtr_interop",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.63
+    },
+    {
+      "group": "interop",
+      "name": "webhook_interop",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 3.542
+    },
+    {
+      "group": "interop",
+      "name": "typed-go-stdio",
+      "status": "passed",
+      "returncode": 0,
+      "seconds": 0.021
+    }
+  ],
+  "logs": "Regenerate target/conformance/report.json and per-check logs using tests/conformance.py; this snapshot records the completed local run."
+}

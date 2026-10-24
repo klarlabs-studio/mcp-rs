@@ -1,0 +1,13 @@
+{
+  "upstream_commit": "52fa5746759d3284a6950e2667915d05ae2c6682",
+  "status": "bounded_card_catalog_http_checks_passed",
+  "checks": [
+    "Matching modern card JSON and normalized catalog JSON",
+    "GET/HEAD, media types, cache/CORS headers, per-body SHA256 ETag, exact conditional 304, POST405, catalog aliases"
+  ],
+  "limitations": [
+    "Rust requires explicit card URL and catalog identifier; Go derives an absolute URL from Host by default. Comparison normalizes that fixture URL only.",
+    "Rust accepts weak/list/wildcard If-None-Match and advertises GET, HEAD in CORS; Go checks exact ETag and advertises GET.",
+    "No full schema certification, icon encoding equivalence, proxy/TLS/browser/preflight certification, or live card synchronization."
+  ]
+}

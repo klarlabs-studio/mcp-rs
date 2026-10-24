@@ -1,0 +1,20 @@
+{
+  "upstream_commit": "52fa5746759d3284a6950e2667915d05ae2c6682",
+  "status": "passed",
+  "cases_per_revision": 23,
+  "revisions": [
+    "2026-07-28"
+  ],
+  "comparisons": 23,
+  "equal_comparisons": 22,
+  "documented_differences": [
+    {
+      "revision": "2026-07-28",
+      "case": "missing-prompt-argument",
+      "paths": [
+        "/error/code"
+      ],
+      "reason": "Pinned Go sanitizes the missing required prompt argument as an internal error. Rust intentionally returns invalid params so callers can correct the request."
+    }
+  ]
+}

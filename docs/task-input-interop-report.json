@@ -1,0 +1,131 @@
+{
+  "status": "passed",
+  "cases_per_language": 8,
+  "upstream_commit": "52fa5746759d3284a6950e2667915d05ae2c6682",
+  "checks": [
+    {
+      "language": "Go",
+      "input_checks": [
+        {
+          "mode": "form",
+          "action": "accept",
+          "status": "completed",
+          "text": "form:accept"
+        },
+        {
+          "mode": "form",
+          "action": "decline",
+          "status": "completed",
+          "text": "form:decline"
+        },
+        {
+          "mode": "form",
+          "action": "cancel",
+          "status": "completed",
+          "text": "form:cancel"
+        },
+        {
+          "mode": "url",
+          "action": "accept",
+          "status": "completed",
+          "text": "url:accept"
+        },
+        {
+          "mode": "url",
+          "action": "decline",
+          "status": "completed",
+          "text": "url:decline"
+        },
+        {
+          "mode": "url",
+          "action": "cancel",
+          "status": "completed",
+          "text": "url:cancel"
+        }
+      ],
+      "retention_checks": [
+        {
+          "case": "retained",
+          "ttl_ms": 1500,
+          "observed_states": [
+            "completed",
+            "unknown"
+          ],
+          "unknown_error_code": -32603
+        },
+        {
+          "case": "overdue",
+          "ttl_ms": 1500,
+          "observed_states": [
+            "working",
+            "unknown"
+          ],
+          "unknown_error_code": -32603
+        }
+      ]
+    },
+    {
+      "language": "Rust",
+      "input_checks": [
+        {
+          "mode": "form",
+          "action": "accept",
+          "status": "completed",
+          "text": "form:accept"
+        },
+        {
+          "mode": "form",
+          "action": "decline",
+          "status": "completed",
+          "text": "form:decline"
+        },
+        {
+          "mode": "form",
+          "action": "cancel",
+          "status": "completed",
+          "text": "form:cancel"
+        },
+        {
+          "mode": "url",
+          "action": "accept",
+          "status": "completed",
+          "text": "url:accept"
+        },
+        {
+          "mode": "url",
+          "action": "decline",
+          "status": "completed",
+          "text": "url:decline"
+        },
+        {
+          "mode": "url",
+          "action": "cancel",
+          "status": "completed",
+          "text": "url:cancel"
+        }
+      ],
+      "retention_checks": [
+        {
+          "case": "retained",
+          "ttl_ms": 1500,
+          "observed_states": [
+            "completed",
+            "unknown"
+          ],
+          "unknown_error_code": -32602
+        },
+        {
+          "case": "overdue",
+          "ttl_ms": 1500,
+          "observed_states": [
+            "working",
+            "failed",
+            "unknown"
+          ],
+          "unknown_error_code": -32602
+        }
+      ]
+    }
+  ],
+  "scope": "Six form/URL elicitation responses and two host-configured TTL cases. Expiry differences are asserted; no broad retention, payload-schema or durable-task certification."
+}

@@ -1,0 +1,77 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+env:
+  CARGO_INCREMENTAL: '0'
+  CARGO_BUILD_JOBS: '2'
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify tag matches both crate versions
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          python3 - <<'PY'
+          import os, pathlib, tomllib
+          tag = os.environ['RELEASE_TAG']
+          for manifest in ('Cargo.toml', 'crates/mcp-protocol/Cargo.toml'):
+              version = tomllib.loads(pathlib.Path(manifest).read_text())['package']['version']
+              if tag != 'v' + version:
+                  raise SystemExit(f'{tag} does not match {manifest}: {version}')
+          PY
+      - uses: actions/checkout@v4
+        with:
+          repository: klarlabs-studio/mcp-go
+          ref: 52fa5746759d3284a6950e2667915d05ae2c6682
+          path: .reference/mcp-go
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26.x'
+          cache: false
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - name: Install minimum supported Rust compiler
+        run: rustup toolchain install 1.89.0 --profile minimal
+      - uses: Swatinem/rust-cache@v2
+      - name: Build pinned reference
+        run: python3 tests/build_go_reference.py --upstream .reference/mcp-go --output target/go-reference
+      - name: Complete release acceptance gate
+        run: python3 tests/conformance.py --go-reference target/go-reference
+      - name: Preserve acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-acceptance
+          path: target/conformance/
+      - name: Build source release and checksums
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          mkdir -p dist
+          version="${RELEASE_TAG#v}"
+          git archive --format=tar.gz --prefix="mcp-rs-$version/" "$GITHUB_SHA" > "dist/mcp-rs-$version-source.tar.gz"
+          cp target/conformance/report.json dist/acceptance-report.json
+          cd dist
+          sha256sum ./*.tar.gz acceptance-report.json > SHA256SUMS
+      - name: Publish GitHub source release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          args=("$RELEASE_TAG" --verify-tag --generate-notes --title "$RELEASE_TAG")
+          if [[ "$RELEASE_TAG" == *-* ]]; then args+=(--prerelease); fi
+          gh release create "${args[@]}" dist/*.tar.gz dist/acceptance-report.json dist/SHA256SUMS

@@ -1,0 +1,26 @@
+{
+  "upstream_commit": "52fa5746759d3284a6950e2667915d05ae2c6682",
+  "checks": [
+    {
+      "transport": "websocket",
+      "direction": "Rust client → Go server",
+      "result": "typed client: Hello Felix"
+    },
+    {
+      "transport": "websocket",
+      "direction": "Go wire probe → Rust server",
+      "result": "Go wire probe: hello, escaped ID, protocol error, resource"
+    },
+    {
+      "transport": "grpc",
+      "direction": "Rust client → Go server",
+      "result": "typed client: Hello Felix"
+    },
+    {
+      "transport": "grpc",
+      "direction": "Go wire probe → Rust server",
+      "result": "Go wire probe: hello, escaped ID, protocol error, resource"
+    }
+  ],
+  "scope": "MCP 2026-07-28 discovery and selected network operations; not a full protocol or TLS certification."
+}

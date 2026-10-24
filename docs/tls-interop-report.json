@@ -1,0 +1,206 @@
+{
+  "upstream_commit": "52fa5746759d3284a6950e2667915d05ae2c6682",
+  "checks": [
+    {
+      "transport": "websocket",
+      "authentication": "tls",
+      "direction": "Rust client → Go server",
+      "checks": [
+        {
+          "identity": "wrong-ca",
+          "result": "rejected"
+        },
+        {
+          "identity": "wrong-host",
+          "result": "rejected"
+        },
+        {
+          "identity": "missing",
+          "result": "accepted"
+        },
+        {
+          "identity": "trusted",
+          "result": "accepted"
+        }
+      ]
+    },
+    {
+      "transport": "websocket",
+      "authentication": "tls",
+      "direction": "Go probe → Rust server",
+      "checks": [
+        {
+          "identity": "wrong-ca",
+          "result": "rejected"
+        },
+        {
+          "identity": "wrong-host",
+          "result": "rejected"
+        },
+        {
+          "identity": "missing",
+          "result": "accepted"
+        },
+        {
+          "identity": "trusted",
+          "result": "accepted"
+        }
+      ]
+    },
+    {
+      "transport": "websocket",
+      "authentication": "mtls",
+      "direction": "Rust client → Go server",
+      "checks": [
+        {
+          "identity": "wrong-ca",
+          "result": "rejected"
+        },
+        {
+          "identity": "wrong-host",
+          "result": "rejected"
+        },
+        {
+          "identity": "missing",
+          "result": "rejected"
+        },
+        {
+          "identity": "untrusted",
+          "result": "rejected"
+        },
+        {
+          "identity": "trusted",
+          "result": "accepted"
+        }
+      ]
+    },
+    {
+      "transport": "websocket",
+      "authentication": "mtls",
+      "direction": "Go probe → Rust server",
+      "checks": [
+        {
+          "identity": "wrong-ca",
+          "result": "rejected"
+        },
+        {
+          "identity": "wrong-host",
+          "result": "rejected"
+        },
+        {
+          "identity": "missing",
+          "result": "rejected"
+        },
+        {
+          "identity": "untrusted",
+          "result": "rejected"
+        },
+        {
+          "identity": "trusted",
+          "result": "accepted"
+        }
+      ]
+    },
+    {
+      "transport": "grpc",
+      "authentication": "tls",
+      "direction": "Rust client → Go server",
+      "checks": [
+        {
+          "identity": "wrong-ca",
+          "result": "rejected"
+        },
+        {
+          "identity": "wrong-host",
+          "result": "rejected"
+        },
+        {
+          "identity": "missing",
+          "result": "accepted"
+        },
+        {
+          "identity": "trusted",
+          "result": "accepted"
+        }
+      ]
+    },
+    {
+      "transport": "grpc",
+      "authentication": "tls",
+      "direction": "Go probe → Rust server",
+      "checks": [
+        {
+          "identity": "wrong-ca",
+          "result": "rejected"
+        },
+        {
+          "identity": "wrong-host",
+          "result": "rejected"
+        },
+        {
+          "identity": "missing",
+          "result": "accepted"
+        },
+        {
+          "identity": "trusted",
+          "result": "accepted"
+        }
+      ]
+    },
+    {
+      "transport": "grpc",
+      "authentication": "mtls",
+      "direction": "Rust client → Go server",
+      "checks": [
+        {
+          "identity": "wrong-ca",
+          "result": "rejected"
+        },
+        {
+          "identity": "wrong-host",
+          "result": "rejected"
+        },
+        {
+          "identity": "missing",
+          "result": "rejected"
+        },
+        {
+          "identity": "untrusted",
+          "result": "rejected"
+        },
+        {
+          "identity": "trusted",
+          "result": "accepted"
+        }
+      ]
+    },
+    {
+      "transport": "grpc",
+      "authentication": "mtls",
+      "direction": "Go probe → Rust server",
+      "checks": [
+        {
+          "identity": "wrong-ca",
+          "result": "rejected"
+        },
+        {
+          "identity": "wrong-host",
+          "result": "rejected"
+        },
+        {
+          "identity": "missing",
+          "result": "rejected"
+        },
+        {
+          "identity": "untrusted",
+          "result": "rejected"
+        },
+        {
+          "identity": "trusted",
+          "result": "accepted"
+        }
+      ]
+    }
+  ],
+  "scope": "Loopback TLS/mTLS discovery, tools, errors, resources, trust/hostname/client-identity rejection, listener survival and graceful shutdown. No revocation, rotation, proxies or production PKI certification."
+}

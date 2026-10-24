@@ -1,0 +1,15 @@
+{
+  "status": "explicit_http_client_adapter_verified",
+  "upstream_commit": "52fa5746759d3284a6950e2667915d05ae2c6682",
+  "operations": 14,
+  "result": "Rust Go-MRTR adapter: 14 prompt/resource operations passed",
+  "scope": "Automatic form/URL accept, decline and cancel for prompts/resources; two sequential form inputs with cumulative answers; returned state and complete-only resource cache hints.",
+  "limitations": [
+    "Opt-in client-go-mrtr HTTP API; native SDK MRTR retains its different wire shape.",
+    "Only MCP 2026-07-28; no initialize or legacy fallback.",
+    "Prompt/resource elicitation only; no tool calls, tasks, sampling or roots.",
+    "Opaque JSON state and malformed-peer bounds are tested locally; the actual Go fixture echoes string state.",
+    "No reverse Go-client/Rust-server MRTR adapter or discovery negotiation is certified.",
+    "The host callback handles consent; the adapter does not fetch URL consent endpoints."
+  ]
+}

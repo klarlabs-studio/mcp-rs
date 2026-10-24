@@ -1,0 +1,107 @@
+[package]
+name = "mcp-rs"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.89"
+publish = false
+repository = "https://github.com/klarlabs-studio/mcp-rs"
+homepage = "https://klarlabs-studio.github.io/mcp-rs/"
+license = "MIT"
+description = "Typed MCP application framework ported from klarlabs-studio/mcp-go"
+
+[features]
+default = ["stdio", "http", "client"]
+client = ["mcp-protocol/client"]
+elicitation = ["mcp-protocol/elicitation"]
+webhooks = ["dep:reqwest", "reqwest/rustls"]
+websocket-tls = ["websocket", "dep:tokio-rustls"]
+websocket = ["dep:tokio-tungstenite", "tokio/net", "futures-util/sink"]
+grpc-tls = ["grpc", "tonic/tls-aws-lc"]
+grpc = ["dep:tonic", "dep:tonic-prost", "dep:prost", "dep:tokio-stream", "tokio/net", "tokio-util/rt"]
+client-go-mrtr = ["client", "dep:reqwest"]
+client-go-subscriptions = ["client", "dep:reqwest", "dep:bytes"]
+client-stdio = ["client", "mcp-protocol/transport-child-process"]
+client-http = ["client", "mcp-protocol/transport-streamable-http-client-reqwest", "mcp-protocol/reqwest"]
+stdio = ["mcp-protocol/transport-io"]
+http = ["dep:sha2", "dep:axum", "mcp-protocol/transport-streamable-http-server", "tokio/net"]
+
+[dependencies]
+mcp-protocol = { version = "0.1.0", path = "crates/mcp-protocol", default-features = false, features = ["server", "schemars"] }
+schemars = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+jsonschema = { version = "0.59", default-features = false }
+regex = "1"
+base64 = "0.22.1"
+arc-swap = "1"
+tracing = "0.1"
+tokio = { version = "1", features = ["rt", "macros", "time", "sync"] }
+tokio-util = "0.7"
+futures-util = { version = "0.3", default-features = false, features = ["std", "async-await"] }
+axum = { version = "0.8", optional = true, default-features = false, features = ["http1", "tokio"] }
+
+tokio-rustls = { version = "0.26", optional = true, default-features = false, features = ["aws_lc_rs", "tls12"] }
+tokio-tungstenite = { version = "0.28", optional = true, features = ["rustls-tls-webpki-roots"] }
+tonic = { version = "0.14", optional = true, features = ["transport"] }
+tonic-prost = { version = "0.14", optional = true }
+prost = { version = "0.14", optional = true }
+tokio-stream = { version = "0.1", optional = true, features = ["net"] }
+
+sha2 = { version = "0.10.9", optional = true }
+bytes = { version = "1", optional = true }
+reqwest = { version = "0.13", optional = true, default-features = false, features = ["json", "stream"] }
+
+[dev-dependencies]
+reqwest = { version = "0.13", default-features = false, features = ["json", "stream"] }
+mcp-protocol = { version = "0.1.0", path = "crates/mcp-protocol", default-features = false, features = ["client", "transport-async-rw"] }
+tokio = { version = "1", features = ["rt-multi-thread", "signal", "io-util", "test-util"] }
+
+[[example]]
+name = "basic"
+required-features = ["stdio", "http"]
+
+[[example]]
+name = "parity"
+required-features = ["stdio"]
+
+[[example]]
+name = "client_probe"
+required-features = ["client-stdio", "client-http"]
+
+[lints.rust]
+unsafe_code = "forbid"
+missing_docs = "deny"
+
+[lints.clippy]
+unwrap_used = "warn"
+expect_used = "warn"
+
+[[example]]
+name = "go_subscription_probe"
+required-features = ["client-go-subscriptions"]
+
+[[example]]
+name = "webhook_probe"
+required-features = ["webhooks"]
+
+[[example]]
+name = "task_wire"
+required-features = ["http"]
+
+[[example]]
+name = "prompt_resource_mrtr"
+required-features = ["http"]
+
+[[example]]
+name = "go_mrtr_probe"
+required-features = ["client-go-mrtr"]
+
+[workspace]
+members = ["crates/mcp-protocol"]
+default-members = ["."]
+resolver = "3"
+
+[[example]]
+name = "tls_probe"
+required-features = ["client", "websocket-tls", "grpc-tls"]

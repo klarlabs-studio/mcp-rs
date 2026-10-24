@@ -1,0 +1,48 @@
+name: API documentation
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages
+  cancel-in-progress: false
+env:
+  CARGO_INCREMENTAL: '0'
+  CARGO_BUILD_JOBS: '2'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Build framework and protocol API documentation
+        run: cargo doc --locked --workspace --all-features --no-deps
+        env:
+          RUSTDOCFLAGS: -D warnings
+      - name: Add documentation entry point
+        run: |
+          touch target/doc/.nojekyll
+          cat > target/doc/index.html <<'HTML'
+          <!doctype html><html lang="en"><meta charset="utf-8"><title>mcp-rs API documentation</title><meta http-equiv="refresh" content="0;url=mcp_rs/"><a href="mcp_rs/">mcp-rs API documentation</a></html>
+          HTML
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: target/doc
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy API documentation
+        id: deployment
+        uses: actions/deploy-pages@v4

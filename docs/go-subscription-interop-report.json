@@ -1,0 +1,26 @@
+{
+  "upstream_commit": "52fa5746759d3284a6950e2667915d05ae2c6682",
+  "status": "explicit_http_client_adapter_verified",
+  "checks": [
+    {
+      "scope": "Actual pinned Go application task manager and HTTP transport: capability rejection, snapshots, completion, failure, cancellation, input-required/resume, unknown-ID errors, empty/unknown-key updates",
+      "result": "Pinned Go application HTTP tasks: task filters, capability rejection, post-open snapshots, typed completion/failure payloads, cancellation, excluded task, unknown-ID errors, empty/unknown-key updates preserve pending input, input_required \u2192 tasks/update \u2192 completed"
+    },
+    {
+      "scope": "Actual pinned Go application handler and HTTP transport",
+      "result": "Pinned Go application: modern metadata/resource-filter request and generated-ID streaming acknowledgement"
+    },
+    {
+      "scope": "Actual pinned Go HTTP transport with deterministic fixture handler; pushes use upstream NotifySubscription",
+      "result": "Pinned Go HTTP transport: generated IDs, scoped pushes, cancellation-safe idle wait, close/drop cleanup"
+    }
+  ],
+  "limitations": [
+    "Native SDK listen retains its different wire shape; use the opt-in client API.",
+    "Go supplies no accepted-filter acknowledgement or initial snapshot hint.",
+    "No native Rust-server task filters, reverse server adapter, automatic Go resource publisher integration, replay, or reconnect certification.",
+    "Pinned Go HTTP wraps unknown-task errors as -32603 with -32602 in the message; Rust SDK returns -32602 directly.",
+    "Pinned Go ServeHTTP requires Capabilities.ResourceSubscribe to wire task notifications; enabled in this fixture.",
+    "Working state is checked via post-open task snapshots; this does not certify every transition, input kind, malformed update, or Go task retention policy."
+  ]
+}

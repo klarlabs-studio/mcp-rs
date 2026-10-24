@@ -1,0 +1,14 @@
+{
+  "upstream_commit": "52fa5746759d3284a6950e2667915d05ae2c6682",
+  "status": "documented_wire_difference",
+  "go": {
+    "first_frame": "JSON-RPC result with generated subscriptionId",
+    "filter_acknowledgment": false
+  },
+  "rust": {
+    "first_frame": "notifications/subscriptions/acknowledged",
+    "subscription_id": "originating JSON-RPC request ID",
+    "initial_refresh_hint": true
+  },
+  "scope": "Native SDK listen retains a different negotiation shape. Use the explicit client-go-subscriptions HTTP API; its evidence is in go-subscription-interop-report.json."
+}

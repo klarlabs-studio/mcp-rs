@@ -1,0 +1,91 @@
+{
+  "upstream_commit": "52fa5746759d3284a6950e2667915d05ae2c6682",
+  "protocol_version": "2026-07-28",
+  "status": "passed",
+  "checks": {
+    "go": {
+      "default": {
+        "ttlMs": 60000,
+        "cacheScope": "private",
+        "cacheable_methods": [
+          "server/discover",
+          "tools/list",
+          "prompts/list",
+          "resources/list",
+          "resources/templates/list",
+          "resources/read"
+        ],
+        "execution_and_error_exclusions": "passed"
+      },
+      "configured_private": {
+        "ttlMs": 12345,
+        "cacheScope": "private",
+        "cacheable_methods": [
+          "server/discover",
+          "tools/list",
+          "prompts/list",
+          "resources/list",
+          "resources/templates/list",
+          "resources/read"
+        ],
+        "execution_and_error_exclusions": "passed"
+      },
+      "configured_public_stale": {
+        "ttlMs": 0,
+        "cacheScope": "public",
+        "cacheable_methods": [
+          "server/discover",
+          "tools/list",
+          "prompts/list",
+          "resources/list",
+          "resources/templates/list",
+          "resources/read"
+        ],
+        "execution_and_error_exclusions": "passed"
+      }
+    },
+    "rust": {
+      "default": {
+        "ttlMs": 0,
+        "cacheScope": "private",
+        "cacheable_methods": [
+          "server/discover",
+          "tools/list",
+          "prompts/list",
+          "resources/list",
+          "resources/templates/list",
+          "resources/read"
+        ],
+        "execution_and_error_exclusions": "passed"
+      },
+      "configured_private": {
+        "ttlMs": 12345,
+        "cacheScope": "private",
+        "cacheable_methods": [
+          "server/discover",
+          "tools/list",
+          "prompts/list",
+          "resources/list",
+          "resources/templates/list",
+          "resources/read"
+        ],
+        "execution_and_error_exclusions": "passed"
+      },
+      "configured_public_stale": {
+        "ttlMs": 0,
+        "cacheScope": "public",
+        "cacheable_methods": [
+          "server/discover",
+          "tools/list",
+          "prompts/list",
+          "resources/list",
+          "resources/templates/list",
+          "resources/read"
+        ],
+        "execution_and_error_exclusions": "passed"
+      }
+    }
+  },
+  "intentional_difference": "Rust defaults to immediately stale/private; pinned Go defaults to 60000ms/private.",
+  "scope": "Cache hints on six successful read/list/discovery methods plus exclusion of tool/prompt execution and a missing-resource error. No response storage, client cache reuse, invalidation, HTTP intermediary cache, or exhaustive cache certification."
+}

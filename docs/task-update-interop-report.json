@@ -1,0 +1,174 @@
+{
+  "status": "passed",
+  "cases_per_language": 11,
+  "upstream_commit": "52fa5746759d3284a6950e2667915d05ae2c6682",
+  "checks": [
+    {
+      "language": "Go",
+      "checks": [
+        {
+          "case": "missing responses",
+          "http_status": 200,
+          "error_code": null,
+          "accepted": true,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "null responses",
+          "http_status": 200,
+          "error_code": null,
+          "accepted": true,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "empty array responses",
+          "http_status": 200,
+          "error_code": null,
+          "accepted": true,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "string responses",
+          "http_status": 200,
+          "error_code": -32603,
+          "accepted": false,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "number responses",
+          "http_status": 200,
+          "error_code": -32603,
+          "accepted": false,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "boolean responses",
+          "http_status": 200,
+          "error_code": -32603,
+          "accepted": false,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "array scalar element",
+          "http_status": 200,
+          "error_code": -32603,
+          "accepted": false,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "numeric task ID",
+          "http_status": 200,
+          "error_code": -32603,
+          "accepted": false,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "missing task ID",
+          "http_status": 200,
+          "error_code": -32603,
+          "accepted": false,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "empty responses",
+          "http_status": 200,
+          "error_code": null,
+          "accepted": true,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "unknown response key",
+          "http_status": 200,
+          "error_code": null,
+          "accepted": true,
+          "pending_input_preserved": true
+        }
+      ],
+      "valid_resume": "hello Ada"
+    },
+    {
+      "language": "Rust",
+      "checks": [
+        {
+          "case": "missing responses",
+          "http_status": 200,
+          "error_code": -32602,
+          "accepted": false,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "null responses",
+          "http_status": 200,
+          "error_code": -32602,
+          "accepted": false,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "empty array responses",
+          "http_status": 200,
+          "error_code": -32602,
+          "accepted": false,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "string responses",
+          "http_status": 200,
+          "error_code": -32602,
+          "accepted": false,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "number responses",
+          "http_status": 200,
+          "error_code": -32602,
+          "accepted": false,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "boolean responses",
+          "http_status": 200,
+          "error_code": -32602,
+          "accepted": false,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "array scalar element",
+          "http_status": 200,
+          "error_code": -32602,
+          "accepted": false,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "numeric task ID",
+          "http_status": 200,
+          "error_code": -32602,
+          "accepted": false,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "missing task ID",
+          "http_status": 200,
+          "error_code": -32602,
+          "accepted": false,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "empty responses",
+          "http_status": 200,
+          "error_code": null,
+          "accepted": true,
+          "pending_input_preserved": true
+        },
+        {
+          "case": "unknown response key",
+          "http_status": 200,
+          "error_code": null,
+          "accepted": true,
+          "pending_input_preserved": true
+        }
+      ],
+      "valid_resume": "hello Ada"
+    }
+  ],
+  "scope": "Selected raw HTTP task update admission and pending-input preservation; no complete task conformance or retention certification."
+}

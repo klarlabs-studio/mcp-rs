@@ -1,0 +1,156 @@
+{
+  "status": "passed",
+  "cases_per_language": 18,
+  "upstream_commit": "52fa5746759d3284a6950e2667915d05ae2c6682",
+  "checks": [
+    {
+      "language": "Go",
+      "race_rounds": 8,
+      "conflicting_answers_choose_one": true,
+      "duplicate_answers_preserve_next_input": true,
+      "terminal_updates_preserve_result": true,
+      "independent_task_ids": true,
+      "terminal_update_error_code": -32603,
+      "invalid_payloads": [
+        {
+          "case": "null",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32603,
+          "late_answer_preserves_failure": true
+        },
+        {
+          "case": "string",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32603,
+          "late_answer_preserves_failure": true
+        },
+        {
+          "case": "number",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32603,
+          "late_answer_preserves_failure": true
+        },
+        {
+          "case": "boolean",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32603,
+          "late_answer_preserves_failure": true
+        },
+        {
+          "case": "array",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32603,
+          "late_answer_preserves_failure": true
+        },
+        {
+          "case": "missing action",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32603,
+          "late_answer_preserves_failure": true
+        },
+        {
+          "case": "unknown action",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32603,
+          "late_answer_preserves_failure": true
+        },
+        {
+          "case": "missing accepted content",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32603,
+          "late_answer_preserves_failure": true
+        },
+        {
+          "case": "wrong field type",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32603,
+          "late_answer_preserves_failure": true
+        }
+      ]
+    },
+    {
+      "language": "Rust",
+      "race_rounds": 8,
+      "conflicting_answers_choose_one": true,
+      "duplicate_answers_preserve_next_input": true,
+      "terminal_updates_preserve_result": true,
+      "independent_task_ids": true,
+      "terminal_update_error_code": null,
+      "invalid_payloads": [
+        {
+          "case": "null",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32602,
+          "late_answer_preserves_failure": true
+        },
+        {
+          "case": "string",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32602,
+          "late_answer_preserves_failure": true
+        },
+        {
+          "case": "number",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32602,
+          "late_answer_preserves_failure": true
+        },
+        {
+          "case": "boolean",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32602,
+          "late_answer_preserves_failure": true
+        },
+        {
+          "case": "array",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32602,
+          "late_answer_preserves_failure": true
+        },
+        {
+          "case": "missing action",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32602,
+          "late_answer_preserves_failure": true
+        },
+        {
+          "case": "unknown action",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32602,
+          "late_answer_preserves_failure": true
+        },
+        {
+          "case": "missing accepted content",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32602,
+          "late_answer_preserves_failure": true
+        },
+        {
+          "case": "wrong field type",
+          "update_acknowledged": true,
+          "status": "failed",
+          "error_code": -32602,
+          "late_answer_preserves_failure": true
+        }
+      ]
+    }
+  ],
+  "scope": "Eight conflicting-response races with duplicate and terminal updates, one two-task isolation case, and nine rejected response payloads. Selected HTTP behavior, not exhaustive race detection, authorization or generic schema validation."
+}

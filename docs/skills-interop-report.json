@@ -1,0 +1,116 @@
+{
+  "upstream_commit": "52fa5746759d3284a6950e2667915d05ae2c6682",
+  "status": "directory_archive_and_skill_template_discovery_and_reads_match",
+  "checks": [
+    "Modern server/discover advertises io.modelcontextprotocol/skills",
+    "skill://index.json contains both immediate-child directory skills in order",
+    "resources/read returns matching root and nested text files with Markdown, SVG, and JSON MIME types",
+    "resources/read returns matching unknown-extension binary MIME type and base64 payload",
+    "skill index includes ZIP, .tar.gz, and .tgz archive entries with normalized .tgz URL",
+    "resources/read returns exact matching archive bytes and ZIP/gzip MIME types",
+    "skill://index.json advertises one parameterized template without a name",
+    "resources/templates/list exposes template metadata and resources/list omits the template",
+    "resources/read serves concrete template URIs with raw parameters and Markdown MIME"
+  ],
+  "limitations": [
+    "Two immediate-child directory-backed skills, three archive-backed skills, one template, and twelve skill resource payloads plus the index are covered.",
+    "Rust snapshots files when registering; Go reads them from disk per request, so post-registration disk changes are not compared.",
+    "The Go fixture registers archive entries before directory entries in sorted order to match this Rust index projection; production registration-order behavior is not certified.",
+    "Archive checks compare opaque payload bytes and MIME metadata only; archive contents are not unpacked or inspected by either server.",
+    "The template check covers ordinary path substitution and preserves the raw percent-encoded capture a%2Fb; decoding and RFC 6570 edge cases are not certified.",
+    "Malformed trees and archives, path validation, limits, errors, visibility, caching, and other transports are not compared across implementations."
+  ],
+  "projection": {
+    "archives": [
+      {
+        "base64": "UEsDBBQAAAAIAAAAIVADubX0VgAAAGoAAAAIAAAAU0tJTEwubWQ1y80NgCAMQOF7p2jiuQ7AzSEcoIEqDYgE0Bin1/hzft8jIki8iEEu1usudGoGJ9UWzU3XZHB4g8O74KRH24pgDRoj0H1D9wuAsQo2L5jZBp6/5aE9XFBLAQIUAxQAAAAIAAAAIVADubX0VgAAAGoAAAAIAAAAAAAAAAAAAACkAQAAAABTS0lMTC5tZFBLBQYAAAAAAQABADYAAAB8AAAAAAA=",
+        "mimeType": "application/zip"
+      },
+      {
+        "base64": "H4sIAAAAAAAC/+3UuwrCMBiG4cy5ioBzS1uqQjdBB1EXxQsIbdRQT7RVxKu3VrTQxcmi+D7LH/LnAIEvi8l4OnV3ifggr9QLw6qWmtXze/X4Md/3w0AoT7TglBc6K68U/8lxHLnXOxMpncUbezZO+Rzrq0xMHmf2WNjDPlKDRytRVU+t7KU4ZUblqd1u5f0E2XmukXKZG1VsjDrqONXr16ZqsSsFvsp8NBjORp/9AN7l3wv8Zv4Dv0v+29C5x9OtQ01AAQAAAAAAAAAAAAAAfssNeaEIQgAoAAA=",
+        "mimeType": "application/gzip"
+      },
+      {
+        "base64": "H4sIAAAAAAAC/+3TywrCMBCF4azzFAHXLa1WC+5cit2JDxDaqEFbJU1FfHrrFXHvDf9vMyEzw6zOdDLOsrAsxAtFrUGSnGvruUZxv3t/X/7TOOkJFYk3aGqvXXtS/KcgCGSlSzNU2uVLuzOBXxxkYerc2a23m2qoRpdGodqOmtu9b5xR9cqu1/K0LTu3CSlntVF+adRW5yu9uK6cR0Mp8IXmG1dqH/q9/1z+ozh5zn+axuT/HR4yTUIBAAAAAAAAAAAAAAB+0BHJLb/jACgAAA==",
+        "mimeType": "application/gzip"
+      }
+    ],
+    "binary": {
+      "base64": "AAEC/w==",
+      "mimeType": "application/octet-stream"
+    },
+    "encoded_template": {
+      "mimeType": "text/markdown",
+      "text": "# Product\n\na%2Fb\n"
+    },
+    "entrypoint": {
+      "mimeType": "text/markdown",
+      "text": "---\nname: git-workflow\ndescription: Follow team Git conventions\n---\n\n# Git\n\nUse feature branches.\n"
+    },
+    "extension_advertised": true,
+    "index": {
+      "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+      "skills": [
+        {
+          "description": "Archived skill archive-targz",
+          "name": "archive-targz",
+          "type": "archive",
+          "url": "skill://archive-targz.tar.gz"
+        },
+        {
+          "description": "Archived skill archive-tgz",
+          "name": "archive-tgz",
+          "type": "archive",
+          "url": "skill://archive-tgz.tar.gz"
+        },
+        {
+          "description": "Archived skill archive-zip",
+          "name": "archive-zip",
+          "type": "archive",
+          "url": "skill://archive-zip.zip"
+        },
+        {
+          "description": "Follow team Git conventions",
+          "name": "git-workflow",
+          "type": "skill-md",
+          "url": "skill://git-workflow/SKILL.md"
+        },
+        {
+          "description": "Prepare a safe release",
+          "name": "release-checklist",
+          "type": "skill-md",
+          "url": "skill://release-checklist/SKILL.md"
+        },
+        {
+          "description": "Product documentation",
+          "type": "mcp-resource-template",
+          "url": "skill://docs/{product}/SKILL.md"
+        }
+      ]
+    },
+    "nested_json": {
+      "mimeType": "application/json",
+      "text": "{\"kind\":\"workflow\"}\n"
+    },
+    "nested_markdown": {
+      "mimeType": "text/markdown",
+      "text": "# Checklist\n"
+    },
+    "nested_svg": {
+      "mimeType": "image/svg+xml",
+      "text": "<svg>workflow</svg>\n"
+    },
+    "notes": {
+      "mimeType": "text/markdown",
+      "text": "# Notes\n"
+    },
+    "second_entrypoint": {
+      "mimeType": "text/markdown",
+      "text": "---\nname: release-checklist\ndescription: Prepare a safe release\n---\n\n# Release\n\nReview the changelog.\n"
+    },
+    "template": {
+      "mimeType": "text/markdown",
+      "text": "# Product\n\nwidget\n"
+    }
+  }
+}

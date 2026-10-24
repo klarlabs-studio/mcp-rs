@@ -1,0 +1,239 @@
+{
+  "status": "passed",
+  "cases_per_language": 22,
+  "upstream_commit": "52fa5746759d3284a6950e2667915d05ae2c6682",
+  "checks": [
+    {
+      "language": "Go",
+      "checks": [
+        {
+          "method": "resources/read",
+          "case": "form:accept",
+          "result": "form:accept"
+        },
+        {
+          "method": "resources/read",
+          "case": "form:decline",
+          "result": "form:decline"
+        },
+        {
+          "method": "resources/read",
+          "case": "form:cancel",
+          "result": "form:cancel"
+        },
+        {
+          "method": "resources/read",
+          "case": "url:accept",
+          "result": "url:accept"
+        },
+        {
+          "method": "resources/read",
+          "case": "url:decline",
+          "result": "url:decline"
+        },
+        {
+          "method": "resources/read",
+          "case": "url:cancel",
+          "result": "url:cancel"
+        },
+        {
+          "method": "resources/read",
+          "case": "two-input-rounds",
+          "result": "sequence:Ada"
+        },
+        {
+          "method": "resources/read",
+          "case": "empty-responses",
+          "result": "input_required"
+        },
+        {
+          "method": "resources/read",
+          "case": "unknown-response-id",
+          "result": "input_required"
+        },
+        {
+          "method": "resources/read",
+          "case": "foreign-envelope-not-consumed",
+          "result": "input_required"
+        },
+        {
+          "method": "resources/read",
+          "case": "string-responses",
+          "result": "input_required"
+        },
+        {
+          "method": "prompts/get",
+          "case": "form:accept",
+          "result": "form:accept"
+        },
+        {
+          "method": "prompts/get",
+          "case": "form:decline",
+          "result": "form:decline"
+        },
+        {
+          "method": "prompts/get",
+          "case": "form:cancel",
+          "result": "form:cancel"
+        },
+        {
+          "method": "prompts/get",
+          "case": "url:accept",
+          "result": "url:accept"
+        },
+        {
+          "method": "prompts/get",
+          "case": "url:decline",
+          "result": "url:decline"
+        },
+        {
+          "method": "prompts/get",
+          "case": "url:cancel",
+          "result": "url:cancel"
+        },
+        {
+          "method": "prompts/get",
+          "case": "two-input-rounds",
+          "result": "sequence:Ada"
+        },
+        {
+          "method": "prompts/get",
+          "case": "empty-responses",
+          "result": "input_required"
+        },
+        {
+          "method": "prompts/get",
+          "case": "unknown-response-id",
+          "result": "input_required"
+        },
+        {
+          "method": "prompts/get",
+          "case": "foreign-envelope-not-consumed",
+          "result": "input_required"
+        },
+        {
+          "method": "prompts/get",
+          "case": "string-responses",
+          "result": "input_required"
+        }
+      ]
+    },
+    {
+      "language": "Rust",
+      "checks": [
+        {
+          "method": "resources/read",
+          "case": "form:accept",
+          "result": "form:accept"
+        },
+        {
+          "method": "resources/read",
+          "case": "form:decline",
+          "result": "form:decline"
+        },
+        {
+          "method": "resources/read",
+          "case": "form:cancel",
+          "result": "form:cancel"
+        },
+        {
+          "method": "resources/read",
+          "case": "url:accept",
+          "result": "url:accept"
+        },
+        {
+          "method": "resources/read",
+          "case": "url:decline",
+          "result": "url:decline"
+        },
+        {
+          "method": "resources/read",
+          "case": "url:cancel",
+          "result": "url:cancel"
+        },
+        {
+          "method": "resources/read",
+          "case": "two-input-rounds",
+          "result": "sequence:Ada"
+        },
+        {
+          "method": "resources/read",
+          "case": "empty-responses",
+          "result": "input_required"
+        },
+        {
+          "method": "resources/read",
+          "case": "unknown-response-id",
+          "result": "input_required"
+        },
+        {
+          "method": "resources/read",
+          "case": "foreign-envelope-not-consumed",
+          "result": "input_required"
+        },
+        {
+          "method": "resources/read",
+          "case": "string-responses",
+          "result": -32602
+        },
+        {
+          "method": "prompts/get",
+          "case": "form:accept",
+          "result": "form:accept"
+        },
+        {
+          "method": "prompts/get",
+          "case": "form:decline",
+          "result": "form:decline"
+        },
+        {
+          "method": "prompts/get",
+          "case": "form:cancel",
+          "result": "form:cancel"
+        },
+        {
+          "method": "prompts/get",
+          "case": "url:accept",
+          "result": "url:accept"
+        },
+        {
+          "method": "prompts/get",
+          "case": "url:decline",
+          "result": "url:decline"
+        },
+        {
+          "method": "prompts/get",
+          "case": "url:cancel",
+          "result": "url:cancel"
+        },
+        {
+          "method": "prompts/get",
+          "case": "two-input-rounds",
+          "result": "sequence:Ada"
+        },
+        {
+          "method": "prompts/get",
+          "case": "empty-responses",
+          "result": "input_required"
+        },
+        {
+          "method": "prompts/get",
+          "case": "unknown-response-id",
+          "result": "input_required"
+        },
+        {
+          "method": "prompts/get",
+          "case": "foreign-envelope-not-consumed",
+          "result": "input_required"
+        },
+        {
+          "method": "prompts/get",
+          "case": "string-responses",
+          "result": -32602
+        }
+      ]
+    }
+  ],
+  "wire_compatible": false,
+  "scope": "Modern HTTP prompt/resource form and URL accept/decline/cancel, two input rounds with cumulative manual responses, missing/unknown IDs, foreign envelopes, malformed responses, state echo and cache hints. Go array/kind/payload plus reserved _meta retry keys differ from SDK keyed method/params plus top-level retry fields. No native Rust-client/Go-server MRTR compatibility or automatic replay adapter is claimed. Go prompt/resource fixture constructs NewElicitor from SessionFromContext because those handlers lack automatic elicitor injection. URL payloads are inspected only; no consent URL is fetched."
+}

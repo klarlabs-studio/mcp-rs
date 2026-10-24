@@ -1,0 +1,48 @@
+{
+  "upstream_commit": "52fa5746759d3284a6950e2667915d05ae2c6682",
+  "status": "build_information_and_typed_modern_icon_interop_verified",
+  "checks": {
+    "go": [
+      {
+        "revision": "2026-07-28",
+        "standard_fields_and_instructions": "passed",
+        "icon": {
+          "mimeType": "image/svg+xml",
+          "sizes": "any",
+          "src": "https://example.test/icon.svg",
+          "theme": "dark"
+        },
+        "go_build_info_extension_present": true,
+        "discovery_identity_in_meta": true,
+        "discovery_top_level_identity_present": true
+      }
+    ],
+    "rust": [
+      {
+        "revision": "2026-07-28",
+        "standard_fields_and_instructions": "passed",
+        "icon": {
+          "mimeType": "image/svg+xml",
+          "sizes": [
+            "any"
+          ],
+          "src": "https://example.test/icon.svg",
+          "theme": "dark"
+        },
+        "go_build_info_extension_present": true,
+        "discovery_identity_in_meta": true,
+        "discovery_top_level_identity_present": false
+      }
+    ]
+  },
+  "typed_client_checks": {
+    "go": "handshake and fresh discovery decoded, icon sizes normalized in owned typed view, buildInfo preserved",
+    "rust": "handshake and fresh discovery decoded, icon sizes normalized in owned typed view, buildInfo preserved"
+  },
+  "build_info": "Both peers emit matching buildInfo inside the modern metadata identity; the native SDK Implementation view alone omits it.",
+  "differences": [
+    "Modern SDK icons use array-valued sizes; pinned modern Go uses string-valued sizes.",
+    "Modern Go duplicates serverInfo at top level; SDK Rust identity is in io.modelcontextprotocol/serverInfo result metadata."
+  ],
+  "scope": "Actual pinned Go metadata options and Rust typed builders; selected common fields, optional icon encodings, discovery placement. Typed Rust client connects to both actual processes and decodes handshake and fresh discovery identities. Outbound icon encoding still differs; this is not a bidirectional rich-icon certification or UI rendering test."
+}

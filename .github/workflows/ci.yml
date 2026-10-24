@@ -1,0 +1,117 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  CARGO_INCREMENTAL: '0'
+  CARGO_BUILD_JOBS: '2'
+permissions:
+  contents: read
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo fmt --all --check
+      - name: Reject external MCP SDK dependencies
+        run: |
+          cargo metadata --locked --format-version 1 > /tmp/mcp-metadata.json
+          python3 -c 'import json; data=json.load(open("/tmp/mcp-metadata.json")); assert not any(p["name"] in {"rmcp", "rmcp-macros"} for p in data["packages"])'
+      - run: cargo clippy --locked --workspace --all-targets --all-features -- -D warnings
+      - run: cargo clippy --locked --lib --no-default-features -- -D warnings
+      - run: cargo doc --locked --workspace --no-deps --all-features
+        env:
+          RUSTDOCFLAGS: -D warnings
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        toolchain: [stable, '1.89.0']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.toolchain }}
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.toolchain }}
+      - run: cargo test --locked --workspace --all-features
+      - run: cargo build --locked --all-features --examples
+      - run: python3 tests/transport_smoke.py
+      - run: target/debug/examples/client_probe --stdio target/debug/examples/basic
+  features:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        features: ['', stdio, http, client, client-stdio, client-http, client-go-subscriptions, client-go-mrtr, elicitation, webhooks, websocket, websocket-tls, grpc, grpc-tls, "client,websocket", "client,websocket-tls", "client,grpc", "client,grpc-tls"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo check --locked --lib --no-default-features --features '${{ matrix.features }}'
+  protocol-features:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        features: ['', client, server, 'client,transport-streamable-http-client-reqwest']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo check --locked -p mcp-protocol --lib --no-default-features --features '${{ matrix.features }}'
+  go-compatibility:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: klarlabs-studio/mcp-go
+          ref: 52fa5746759d3284a6950e2667915d05ae2c6682
+          path: .reference/mcp-go
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26.x'
+          cache: false
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo build --locked --all-features --examples
+      - run: python3 tests/build_go_reference.py --upstream .reference/mcp-go --output target/go-reference
+      - name: Modern conformance and pinned Go interoperability
+        run: python3 tests/conformance.py --only interop --go-reference target/go-reference
+      - name: Preserve conformance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: go-interop-evidence
+          path: |
+            target/conformance/
+            docs/*report.json
+  required:
+    name: Required checks
+    if: ${{ always() }}
+    needs: [quality, test, features, protocol-features, go-compatibility]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require every Rust and interoperability job to pass
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          results = json.loads(os.environ['RESULTS'])
+          failed = {name: job['result'] for name, job in results.items() if job['result'] != 'success'}
+          if failed:
+              raise SystemExit(f'Required jobs did not pass: {failed}')
+          print('All required Rust and pinned Go interoperability checks passed')
+          PY

@@ -1,0 +1,291 @@
+[
+  {
+    "name": "hello",
+    "method": "tools/call",
+    "params": {
+      "name": "hello",
+      "arguments": {
+        "name": "Felix"
+      }
+    },
+    "expect": {
+      "/result/content/0/text": "Hello Felix"
+    }
+  },
+  {
+    "name": "missing-input",
+    "method": "tools/call",
+    "params": {
+      "name": "hello",
+      "arguments": {}
+    },
+    "expect": {
+      "/result/isError": true
+    }
+  },
+  {
+    "name": "wrong-input-type",
+    "method": "tools/call",
+    "params": {
+      "name": "count",
+      "arguments": {
+        "count": "two"
+      }
+    },
+    "expect": {
+      "/result/isError": true
+    }
+  },
+  {
+    "name": "schema-minimum",
+    "method": "tools/call",
+    "params": {
+      "name": "count",
+      "arguments": {
+        "count": 0
+      }
+    },
+    "expect": {
+      "/result/isError": true
+    }
+  },
+  {
+    "name": "schema-maximum",
+    "method": "tools/call",
+    "params": {
+      "name": "count",
+      "arguments": {
+        "count": 6
+      }
+    },
+    "expect": {
+      "/result/isError": true
+    }
+  },
+  {
+    "name": "schema-valid",
+    "method": "tools/call",
+    "params": {
+      "name": "count",
+      "arguments": {
+        "count": 3
+      }
+    },
+    "expect": {
+      "/result/content/0/text": "3"
+    }
+  },
+  {
+    "name": "structured-output",
+    "method": "tools/call",
+    "params": {
+      "name": "structured",
+      "arguments": {
+        "name": "Felix"
+      }
+    },
+    "expect": {
+      "/result/structuredContent/message": "Hello Felix",
+      "/result/content/0/type": "text"
+    }
+  },
+  {
+    "name": "rich-output",
+    "method": "tools/call",
+    "params": {
+      "name": "rich",
+      "arguments": {
+        "name": "Felix"
+      }
+    },
+    "expect": {
+      "/result/structuredContent/name": "Felix",
+      "/result/content/0/text": "display"
+    }
+  },
+  {
+    "name": "empty-object-is-present",
+    "method": "tools/call",
+    "params": {
+      "name": "empty",
+      "arguments": {
+        "name": "Felix"
+      }
+    },
+    "expect": {
+      "/result/structuredContent": {},
+      "/result/content": []
+    }
+  },
+  {
+    "name": "tool-execution-failure",
+    "method": "tools/call",
+    "params": {
+      "name": "failure",
+      "arguments": {
+        "name": "Felix"
+      }
+    },
+    "expect": {
+      "/result/isError": true,
+      "/result/content/0/text": "Expected failure"
+    },
+    "absent": [
+      "/result/structuredContent"
+    ]
+  },
+  {
+    "name": "unknown-tool",
+    "method": "tools/call",
+    "params": {
+      "name": "absent",
+      "arguments": {}
+    },
+    "expect": {
+      "/error/code": -32602
+    }
+  },
+  {
+    "name": "static-resource-list",
+    "method": "resources/list",
+    "params": {},
+    "expect": {
+      "/result/resources/0/uri": "about://server",
+      "/result/resources/1/uri": "blob://logo"
+    },
+    "length": {
+      "/result/resources": 2
+    }
+  },
+  {
+    "name": "template-list",
+    "method": "resources/templates/list",
+    "params": {},
+    "expect": {
+      "/result/resourceTemplates/0/uriTemplate": "users://{id}"
+    },
+    "length": {
+      "/result/resourceTemplates": 1
+    }
+  },
+  {
+    "name": "static-resource",
+    "method": "resources/read",
+    "params": {
+      "uri": "about://server"
+    },
+    "expect": {
+      "/result/contents/0/text": "About the fixture"
+    }
+  },
+  {
+    "name": "resource-template",
+    "method": "resources/read",
+    "params": {
+      "uri": "users://42"
+    },
+    "expect": {
+      "/result/contents/0/text": "User 42",
+      "/result/contents/0/uri": "users://42"
+    }
+  },
+  {
+    "name": "raw-template-parameters",
+    "method": "resources/read",
+    "params": {
+      "uri": "users://a%20b"
+    },
+    "expect": {
+      "/result/contents/0/text": "User a%20b"
+    }
+  },
+  {
+    "name": "binary-resource",
+    "method": "resources/read",
+    "params": {
+      "uri": "blob://logo"
+    },
+    "expect": {
+      "/result/contents/0/blob": "AAEC",
+      "/result/contents/0/mimeType": "application/octet-stream"
+    }
+  },
+  {
+    "name": "resource-not-found",
+    "method": "resources/read",
+    "params": {
+      "uri": "users://a/b"
+    },
+    "expect": {
+      "/error/code": -32602
+    }
+  },
+  {
+    "name": "prompt",
+    "method": "prompts/get",
+    "params": {
+      "name": "greet",
+      "arguments": {
+        "name": "Felix"
+      }
+    },
+    "expect": {
+      "/result/messages/0/role": "user",
+      "/result/messages/0/content/text": "Greet Felix"
+    }
+  },
+  {
+    "name": "missing-prompt-argument",
+    "method": "prompts/get",
+    "params": {
+      "name": "greet",
+      "arguments": {}
+    },
+    "expect": {
+      "/error/code": -32602
+    },
+    "expect_by_language": {
+      "Go": {
+        "/error/code": -32603
+      }
+    },
+    "difference_reason": "Pinned Go sanitizes the missing required prompt argument as an internal error. Rust intentionally returns invalid params so callers can correct the request."
+  },
+  {
+    "name": "tool-pagination-first",
+    "method": "tools/list",
+    "params": {},
+    "expect": {
+      "/result/nextCursor": "page_095"
+    },
+    "length": {
+      "/result/tools": 100
+    }
+  },
+  {
+    "name": "tool-pagination-next",
+    "method": "tools/list",
+    "params": {
+      "cursor": "page_095"
+    },
+    "expect": {
+      "/result/tools/0/name": "page_096"
+    },
+    "length": {
+      "/result/tools": 7
+    },
+    "absent": [
+      "/result/nextCursor"
+    ]
+  },
+  {
+    "name": "invalid-cursor",
+    "method": "tools/list",
+    "params": {
+      "cursor": "missing"
+    },
+    "expect": {
+      "/error/code": -32602
+    }
+  }
+]

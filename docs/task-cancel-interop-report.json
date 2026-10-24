@@ -1,0 +1,88 @@
+{
+  "status": "passed",
+  "cases_per_language": 30,
+  "upstream_commit": "52fa5746759d3284a6950e2667915d05ae2c6682",
+  "checks": [
+    {
+      "language": "Go",
+      "ordered_and_isolation_checks": [
+        "cancel before input response",
+        "cancel after first input response",
+        "concurrent duplicate cancellation",
+        "cancel after completed",
+        "cancel after failed",
+        "cancellation isolated from another task"
+      ],
+      "race_checks": [
+        {
+          "race": "input",
+          "rounds": 8,
+          "allowed_terminal_states": [
+            "cancelled"
+          ],
+          "terminal_state_preserved": true
+        },
+        {
+          "race": "completion",
+          "rounds": 8,
+          "allowed_terminal_states": [
+            "cancelled",
+            "completed"
+          ],
+          "terminal_state_preserved": true
+        },
+        {
+          "race": "failure",
+          "rounds": 8,
+          "allowed_terminal_states": [
+            "cancelled",
+            "failed"
+          ],
+          "terminal_state_preserved": true
+        }
+      ],
+      "terminal_cancel_and_update_error_code": -32603
+    },
+    {
+      "language": "Rust",
+      "ordered_and_isolation_checks": [
+        "cancel before input response",
+        "cancel after first input response",
+        "concurrent duplicate cancellation",
+        "cancel after completed",
+        "cancel after failed",
+        "cancellation isolated from another task"
+      ],
+      "race_checks": [
+        {
+          "race": "input",
+          "rounds": 8,
+          "allowed_terminal_states": [
+            "cancelled"
+          ],
+          "terminal_state_preserved": true
+        },
+        {
+          "race": "completion",
+          "rounds": 8,
+          "allowed_terminal_states": [
+            "cancelled",
+            "completed"
+          ],
+          "terminal_state_preserved": true
+        },
+        {
+          "race": "failure",
+          "rounds": 8,
+          "allowed_terminal_states": [
+            "cancelled",
+            "failed"
+          ],
+          "terminal_state_preserved": true
+        }
+      ],
+      "terminal_cancel_and_update_error_code": null
+    }
+  ],
+  "scope": "Six ordered/isolation cases and eight rounds each of cancellation versus input, completion, and failure. Either valid race ordering is permitted; not exhaustive schedule coverage, execution cancellation, authorization, or distributed consistency."
+}

@@ -1,0 +1,22 @@
+{
+  "upstream_commit": "52fa5746759d3284a6950e2667915d05ae2c6682",
+  "status": "selected_webhook_payloads_headers_and_status_handling_match",
+  "checks": [
+    {
+      "http_status": 202,
+      "matching_requests": 3,
+      "result": "accepted"
+    },
+    {
+      "http_status": 204,
+      "matching_requests": 3,
+      "result": "accepted"
+    },
+    {
+      "http_status": 503,
+      "matching_requests": 1,
+      "result": "rejected_without_retry"
+    }
+  ],
+  "scope": "Actual Rust and pinned Go helper POSTs to a local HTTP receiver: channel, resource update, null params, no request ID, content type, Mcp-Method, custom header, 202/204 acceptance and 503 rejection. Not TLS, endpoint authentication, retries under transport faults, event subscription, durable delivery, or a formal webhook protocol certification."
+}
