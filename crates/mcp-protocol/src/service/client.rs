@@ -47,10 +47,10 @@ use crate::{
 #[non_exhaustive]
 pub enum ClientInitializeError {
     #[error("expect initialized response, but received: {0:?}")]
-    ExpectedInitResponse(Option<ServerJsonRpcMessage>),
+    ExpectedInitResponse(Option<Box<ServerJsonRpcMessage>>),
 
     #[error("expect initialized result, but received: {0:?}")]
-    ExpectedInitResult(Option<ServerResult>),
+    ExpectedInitResult(Option<Box<ServerResult>>),
 
     #[error("conflict initialized response id: expected {0}, got {1}")]
     ConflictInitResponseId(RequestId, RequestId),
@@ -857,7 +857,9 @@ where
                 return Ok(());
             }
             Ok(response) => {
-                return Err(ClientInitializeError::ExpectedInitResult(Some(response)));
+                return Err(ClientInitializeError::ExpectedInitResult(Some(Box::new(
+                    response,
+                ))));
             }
             Err(ClientInitializeError::JsonRpcError(error))
                 if error.code == crate::model::ErrorCode::UNSUPPORTED_PROTOCOL_VERSION =>
