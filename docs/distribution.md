@@ -1,8 +1,10 @@
 # Source distribution — 0.1.0
 
 The locally validated distribution is a source bundle consumed through a Cargo
-path dependency. Neither crate is published to a registry. Both packages retain
-`publish = false`, and the framework deliberately uses its bundled protocol engine.
+path dependency. Registry packaging is also configured as `klarlabs-mcp` and
+`klarlabs-mcp-protocol`; Rust imports retain their original names. The framework
+uses its own protocol engine in both source and registry distributions.
+See [publishing](publishing.md) for the registry release process and status links.
 
 The bundle includes `Cargo.lock`, the framework, `crates/mcp-protocol`, examples,
 fixtures, CI configuration, documentation and upstream license/provenance notices.
@@ -18,12 +20,12 @@ archive before extraction, then use its root as a local Cargo dependency:
 mcp-rs = { path = "../mcp-rs-0.1.0" }
 ```
 
-This source bundle is not a crates.io package. Registry publication requires a
-chosen, available package identity for both crates, versioned engine dependency,
-reviewed package contents, hosted CI and registry access. The GitHub repository is
-[klarlabs-studio/mcp-rs](https://github.com/klarlabs-studio/mcp-rs); hosted checks
-run there. The versioned local engine dependency is configured, but registry
-package ownership and publication remain separate release work.
+This historical source bundle is separate from the crates.io packages generated
+by Cargo. Both registry packages use explicit file allowlists and retain their
+upstream licensing/provenance notices. CI verifies the complete workspace package
+dry run, including the versioned engine dependency, before release.
+The GitHub repository is [klarlabs-studio/mcp-rs](https://github.com/klarlabs-studio/mcp-rs).
+A configured workflow is not proof of publication; verify versions on crates.io.
 
 Release evidence is in [acceptance-report.json](acceptance-report.json). The
 source-bundle consumer check is recorded separately in the distribution manifest;

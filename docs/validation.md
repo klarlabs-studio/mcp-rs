@@ -3,7 +3,9 @@
 Scope is MCP **2026-07-28 through discovery only**. Older protocol compatibility
 is excluded. Local checks use Rust 1.97.0 on macOS; the minimum compiler is 1.89.0.
 Cargo.lock resolves the in-repository `mcp-protocol` engine. There is no registry
-`rmcp` or `rmcp-macros` dependency. CI is configured but has not run on GitHub.
+`rmcp` or `rmcp-macros` dependency. This section records the local acceptance
+snapshot before GitHub setup; current hosted evidence is linked from
+[repository setup](repository-setup.md).
 Builds use a generated staging cache, `CARGO_INCREMENTAL=0`, offline locked Cargo
 commands, and at most `-j 4`.
 
@@ -29,7 +31,9 @@ The first complete gate ran while these fixes were being edited. Its individual
 checks passed, but its source-change guard correctly rejected acceptance. The
 reported final run repeated every check with the implementation held unchanged.
 The checked-in CI invokes the same pinned interoperability group and retains logs.
-Hosted CI and publication have not run; both packages remain `publish = false`.
+At the time of that acceptance snapshot, hosted CI and publication had not run.
+Current registry packaging and release checks are documented in
+[publishing](publishing.md).
 See [release-readiness.md](release-readiness.md) for the supported scope and
 intentional differences. Go remains a test reference, not a runtime dependency.
 

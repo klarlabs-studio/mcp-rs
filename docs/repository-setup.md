@@ -5,12 +5,13 @@ Repository: https://github.com/klarlabs-studio/mcp-rs
 The setup follows `klarlabs-studio/mcp-go` while retaining Rust-specific checks.
 The repository is public with `main` as its default branch, issues/projects/wiki,
 merge/squash/rebase options and automatic merge support. Source and licensing
-remain independent of GitHub hosting; both crates still disable registry publishing.
+remain independent of GitHub hosting. Registry publication uses the available
+`klarlabs-mcp` and `klarlabs-mcp-protocol` names with unchanged Rust import names.
 
 ## Main branch
 
 The required `Required checks` job aggregates quality, stable/MSRV tests, both
-feature matrices and pinned Go interoperability. It fails if any dependency fails
+feature matrices, registry package dry runs and pinned Go interoperability. It fails if any dependency fails
 or is skipped. Strict up-to-date status checks, pull requests, stale review
 invalidation, linear history and resolved conversations match mcp-go's policy.
 Force pushes and branch deletion are disabled. As in mcp-go, no approving-review
@@ -31,7 +32,10 @@ https://klarlabs-studio.github.io/mcp-rs/.
 
 Version tags run a complete acceptance gate before publishing a GitHub source
 release, acceptance report and SHA256 checksums. Both crate versions must match
-the tag. This workflow does not publish crates to a registry.
+the tag. It verifies both crates with `cargo publish --workspace --all-features
+--dry-run`, then publishes them to crates.io in dependency order after acceptance
+passes. A scoped `CRATES_IO_TOKEN` repository secret is required before tagging.
+See [publishing](publishing.md) for initial setup, checks and recovery.
 
 The Relicta configuration follows conventional versioning and changelog settings
 from mcp-go. AI notes are disabled; local defaults are dry-run, no Git push and

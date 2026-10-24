@@ -68,7 +68,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
-      - run: cargo check --locked -p mcp-protocol --lib --no-default-features --features '${{ matrix.features }}'
+      - run: cargo check --locked --manifest-path crates/mcp-protocol/Cargo.toml --lib --no-default-features --features '${{ matrix.features }}'
   go-compatibility:
     runs-on: ubuntu-latest
     steps:
@@ -96,10 +96,18 @@ jobs:
           path: |
             target/conformance/
             docs/*report.json
+  packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Verify both registry packages without uploading
+        run: cargo publish --locked --workspace --all-features --dry-run
   required:
     name: Required checks
     if: ${{ always() }}
-    needs: [quality, test, features, protocol-features, go-compatibility]
+    needs: [quality, test, features, protocol-features, go-compatibility, packages]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

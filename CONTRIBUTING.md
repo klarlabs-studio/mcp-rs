@@ -143,5 +143,7 @@ Do not run two independent GitHub release publishers for the same tag: the tag
 workflow owns source release publication.
 
 A matching `v<version>` tag runs the complete acceptance gate, then publishes a
-GitHub source archive, its acceptance report and checksums. Neither crate is
-automatically published to a registry; both retain `publish = false`.
+GitHub source archive, its acceptance report and checksums. After package dry
+runs and acceptance pass, it publishes both crates to crates.io using the scoped
+`CRATES_IO_TOKEN` repository secret. See [publishing](docs/publishing.md) for crate
+identities, credential setup and partial-publication recovery.
