@@ -1,13 +1,20 @@
 [package]
-name = "mcp-rs"
+name = "klarlabs-mcp"
 version = "0.1.0"
 edition = "2024"
 rust-version = "1.89"
-publish = false
+publish = ["crates-io"]
 repository = "https://github.com/klarlabs-studio/mcp-rs"
 homepage = "https://klarlabs-studio.github.io/mcp-rs/"
 license = "MIT"
 description = "Typed MCP application framework ported from klarlabs-studio/mcp-go"
+readme = "README.md"
+keywords = ["mcp", "model-context", "json-rpc", "ai", "async"]
+categories = ["api-bindings", "asynchronous"]
+include = ["Cargo.toml", "Cargo.lock", "LICENSE", "README.md", "UPSTREAM.md", "src/**", "examples/**", "tests/**", "proto/**"]
+
+[lib]
+name = "mcp_rs"
 
 [features]
 default = ["stdio", "http", "client"]
@@ -26,7 +33,7 @@ stdio = ["mcp-protocol/transport-io"]
 http = ["dep:sha2", "dep:axum", "mcp-protocol/transport-streamable-http-server", "tokio/net"]
 
 [dependencies]
-mcp-protocol = { version = "0.1.0", path = "crates/mcp-protocol", default-features = false, features = ["server", "schemars"] }
+mcp-protocol = { package = "klarlabs-mcp-protocol", version = "0.1.0", path = "crates/mcp-protocol", default-features = false, features = ["server", "schemars"] }
 schemars = "1"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
@@ -54,7 +61,7 @@ reqwest = { version = "0.13", optional = true, default-features = false, feature
 
 [dev-dependencies]
 reqwest = { version = "0.13", default-features = false, features = ["json", "stream"] }
-mcp-protocol = { version = "0.1.0", path = "crates/mcp-protocol", default-features = false, features = ["client", "transport-async-rw"] }
+mcp-protocol = { package = "klarlabs-mcp-protocol", version = "0.1.0", path = "crates/mcp-protocol", default-features = false, features = ["client", "transport-async-rw"] }
 tokio = { version = "1", features = ["rt-multi-thread", "signal", "io-util", "test-util"] }
 
 [[example]]

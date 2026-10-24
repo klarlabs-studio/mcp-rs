@@ -73,9 +73,12 @@ Local acceptance and hosted CI are separate evidence. The repository is
 results are recorded in [Actions](https://github.com/klarlabs-studio/mcp-rs/actions).
 CI runs the full pinned interoperability group and preserves its report/logs.
 Protected main requires the aggregate check covering Rust quality, stable/MSRV,
-feature configurations and pinned Go interoperability. A maintainer must review
+feature configurations, package dry runs and pinned Go interoperability. A maintainer must review
 hosted results before creating a release tag. Tag releases rerun the complete
 acceptance gate before publishing a source archive and checksums on GitHub.
-Both packages retain `publish = false`; registry naming, account access and a
-public release are separate maintainer decisions. No credentials are required
-for local development, and no release action is performed by the gate.
+Registry package identities are `klarlabs-mcp` and `klarlabs-mcp-protocol`, both
+restricted to crates.io. The release workflow publishes both packages in dependency
+order after acceptance. A scoped `CRATES_IO_TOKEN` secret is required before
+creating a tag; see [publishing](publishing.md). No credentials are required for
+local development or CI package dry runs, and the acceptance gate itself never
+publishes anything.

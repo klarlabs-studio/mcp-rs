@@ -49,7 +49,18 @@ cargo clippy --locked --workspace --all-targets --all-features -- -D warnings
 ```
 
 The repository is [klarlabs-studio/mcp-rs](https://github.com/klarlabs-studio/mcp-rs).
-Neither crate is published to crates.io. Clone it and use a local path dependency:
+The crates.io package names are `klarlabs-mcp` and `klarlabs-mcp-protocol`;
+Rust imports remain `mcp_rs` and `mcp_protocol`. For a published release:
+
+```toml
+[dependencies]
+mcp-rs = { package = "klarlabs-mcp", version = "0.1" }
+serde = { version = "1", features = ["derive"] }
+schemars = "1"
+```
+
+Check [crates.io](https://crates.io/crates/klarlabs-mcp) for publication status.
+For development, clone the repository and use a local path dependency:
 
 ```toml
 [dependencies]

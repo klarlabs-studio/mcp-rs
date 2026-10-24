@@ -1,15 +1,20 @@
 [package]
-name = "mcp-protocol"
+name = "klarlabs-mcp-protocol"
 version = "0.1.0"
 edition = "2024"
 rust-version = "1.89"
 license = "Apache-2.0 AND MIT"
-publish = false
+publish = ["crates-io"]
 repository = "https://github.com/klarlabs-studio/mcp-rs"
 homepage = "https://klarlabs-studio.github.io/mcp-rs/"
-description = "In-repository modern MCP protocol engine for mcp-rs"
+description = "Modern MCP protocol engine maintained by Klarlabs for mcp-rs"
+readme = "README.md"
+keywords = ["mcp", "model-context", "json-rpc", "async"]
+categories = ["api-bindings", "asynchronous"]
+include = ["Cargo.toml", "Cargo.lock", "README.md", "UPSTREAM.md", "UPSTREAM-LICENSE", "src/**", "tests/**"]
 
 [lib]
+name = "mcp_protocol"
 doctest = false
 
 [features]

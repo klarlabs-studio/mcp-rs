@@ -123,7 +123,7 @@ def main():
             for index, features in enumerate(FRAMEWORK_FEATURES):
                 cargo("features", f"framework-{index}", "check", "--lib", "--no-default-features", "--features", features)
             for index, features in enumerate(PROTOCOL_FEATURES):
-                cargo("features", f"protocol-{index}", "check", "-p", "mcp-protocol", "--lib", "--no-default-features", "--features", features)
+                cargo("features", f"protocol-{index}", "check", "--manifest-path", "crates/mcp-protocol/Cargo.toml", "--lib", "--no-default-features", "--features", features)
         if "tests" in groups:
             cargo("tests", "workspace", "test", "--workspace", "--all-features")
             cargo("tests", "examples", "build", "--all-features", "--examples")
