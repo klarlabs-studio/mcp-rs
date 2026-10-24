@@ -85,13 +85,13 @@ impl ServiceRole for RoleServer {
 #[non_exhaustive]
 pub enum ServerInitializeError {
     #[error("expect initialized request, but received: {0:?}")]
-    ExpectedInitializeRequest(Option<ClientJsonRpcMessage>),
+    ExpectedInitializeRequest(Option<Box<ClientJsonRpcMessage>>),
 
     #[error("connection closed: {0}")]
     ConnectionClosed(String),
 
     #[error("unexpected initialize result: {0:?}")]
-    UnexpectedInitializeResponse(ServerResult),
+    UnexpectedInitializeResponse(Box<ServerResult>),
 
     #[error("initialize failed: {0}")]
     InitializeFailed(ErrorData),
@@ -611,7 +611,7 @@ where
             }
             other => {
                 return Err(ServerInitializeError::ExpectedInitializeRequest(Some(
-                    other,
+                    Box::new(other),
                 )));
             }
         }

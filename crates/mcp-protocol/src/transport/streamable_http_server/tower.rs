@@ -1278,7 +1278,7 @@ where
         let (part, body) = request.into_parts();
         let message = match expect_json(body, self.config.max_request_body_bytes).await {
             Ok(message) => message,
-            Err(response) => return Ok(response),
+            Err(response) => return Ok(*response),
         };
 
         // Stateless mode:

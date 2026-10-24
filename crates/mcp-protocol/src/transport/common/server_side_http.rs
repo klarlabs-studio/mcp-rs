@@ -206,7 +206,7 @@ pub(crate) fn unexpected_message_response(expect: &str) -> Response<BoxBody<Byte
 pub(crate) async fn expect_json<B>(
     body: B,
     max_bytes: usize,
-) -> Result<ClientJsonRpcMessage, Response<BoxBody<Bytes, Infallible>>>
+) -> Result<ClientJsonRpcMessage, Box<Response<BoxBody<Bytes, Infallible>>>>
 where
     B: Body + Send + 'static,
     B::Error: Display,
@@ -231,7 +231,7 @@ where
                             .boxed(),
                         )
                         .expect("valid response");
-                    return Err(response);
+                    return Err(Box::new(response));
                 }
                 while data.has_remaining() {
                     let chunk = data.chunk();
@@ -247,7 +247,7 @@ where
                         Full::new(Bytes::from(format!("Failed to read request body: {e}"))).boxed(),
                     )
                     .expect("valid response");
-                return Err(response);
+                return Err(Box::new(response));
             }
         }
     }
@@ -261,7 +261,7 @@ where
                     Full::new(Bytes::from(format!("fail to deserialize request body {e}"))).boxed(),
                 )
                 .expect("valid response");
-            Err(response)
+            Err(Box::new(response))
         }
     }
 }
