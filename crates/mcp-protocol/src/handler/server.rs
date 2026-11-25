@@ -54,36 +54,46 @@ impl<H: ServerHandler> Service<RoleServer> for H {
         request: <RoleServer as ServiceRole>::PeerReq,
         context: RequestContext<RoleServer>,
     ) -> Result<<RoleServer as ServiceRole>::Resp, McpError> {
-        if matches!(request, ClientRequest::InitializeRequest(_)) {
+        let is_initialize = matches!(request, ClientRequest::InitializeRequest(_));
+        let requested_version = if is_initialize {
+            match &request {
+                ClientRequest::InitializeRequest(request) => {
+                    request.params.protocol_version.clone()
+                }
+                _ => unreachable!(),
+            }
+        } else {
+            context.protocol_version().ok_or_else(|| {
+                McpError::invalid_request("MCP session has not been initialized", None)
+            })?
+        };
+        let legacy_request = requested_version.has_initialize();
+        if is_initialize && !legacy_request {
             return Err(McpError::invalid_request(
-                "initialize is retired; use server/discover",
+                "initialize is only valid for protocol versions before 2026-07-28",
                 None,
             ));
         }
-        let missing = context
-            .meta
-            .missing_required_keys(&ProtocolVersion::V_2026_07_28);
-        if !missing.is_empty() {
-            return Err(McpError::invalid_params(
-                format!(
-                    "request _meta is missing or has malformed required fields: {}",
-                    missing.join(", ")
-                ),
-                None,
-            ));
+        if !legacy_request {
+            let missing = context.meta.missing_required_keys(&requested_version);
+            if !missing.is_empty() {
+                return Err(McpError::invalid_params(
+                    format!(
+                        "request _meta is missing or has malformed required fields: {}",
+                        missing.join(", ")
+                    ),
+                    None,
+                ));
+            }
         }
-        let requested_version = context
-            .meta
-            .protocol_version()
-            .expect("validated protocol version");
-        if requested_version != ProtocolVersion::V_2026_07_28 {
+        let supported_versions = self.supported_protocol_versions();
+        if !supported_versions.contains(&requested_version) {
             return Err(McpError::unsupported_protocol_version(
                 requested_version,
-                &[ProtocolVersion::V_2026_07_28],
+                &supported_versions,
             ));
         }
-        let is_2026_07_28_or_later = true;
-        let legacy_request = false;
+        let is_2026_07_28_or_later = !legacy_request;
         let result = match request {
             ClientRequest::InitializeRequest(request) => self
                 .initialize(request.params, context)

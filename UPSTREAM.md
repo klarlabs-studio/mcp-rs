@@ -7,8 +7,11 @@
 
 This independent Rust implementation ports modern application concepts using
 Rust generics, Serde, Schemars, and the repository-owned protocol engine. Scope is MCP
-2026-07-28 with discovery only. Older revisions and compatibility shims are
-intentionally excluded, regardless of upstream or SDK availability.
+2026-07-28 with discovery only. Every default entry point is modern-only and
+rejects `initialize`. The one exception is opt-in: `serve_stdio_compatible`
+also accepts the `initialize` handshake of earlier revisions, for stdio servers
+whose clients have not moved to discovery yet. It changes negotiation only;
+retired methods stay rejected. No other compatibility shims are included.
 
 `tests/build_go_reference.py` requires the exact clean checkout above. Reference
 fixtures use actual upstream handlers/transports and modern request metadata.

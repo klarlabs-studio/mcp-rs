@@ -22,7 +22,7 @@ use mcp_protocol::transport::streamable_http_server::{
     feature = "websocket",
     feature = "grpc"
 ))]
-use modern::Modern;
+use modern::{Compatible, Modern};
 #[cfg(any(feature = "stdio", feature = "http"))]
 use tokio_util::sync::CancellationToken;
 
@@ -61,6 +61,43 @@ pub async fn serve_stdio<H: ServerHandler>(
         mcp_protocol::transport::async_rw::DEFAULT_MAX_MESSAGE_SIZE,
     )
     .await
+}
+
+/// Serve MCP stdio while accepting both the current discovery lifecycle and
+/// earlier protocol revisions that negotiate with `initialize`.
+///
+/// Retired methods stay rejected and discovery behaves as in [`serve_stdio`];
+/// only the `initialize` handshake of the earlier revisions is added. The
+/// default [`serve_stdio`] and every other entry point remain modern-only.
+///
+/// # Errors
+/// Returns an initialization error or a failure from the SDK background task.
+#[cfg(feature = "stdio")]
+pub async fn serve_stdio_compatible<H: ServerHandler>(
+    server: H,
+    shutdown: CancellationToken,
+) -> Result<(), TransportError> {
+    let (read, write) = mcp_protocol::transport::stdio();
+    let transport = mcp_protocol::transport::async_rw::AsyncRwTransport::new(read, write);
+    let running = tokio::select! {
+        biased;
+        _ = shutdown.cancelled() => return Ok(()),
+        result = Compatible(server).serve(transport) => result?,
+    };
+    let cancel = running.cancellation_token();
+    let completion = running.waiting();
+    tokio::pin!(completion);
+    let reason = tokio::select! {
+        result = &mut completion => result?,
+        _ = shutdown.cancelled() => {
+            cancel.cancel();
+            completion.await?
+        },
+    };
+    if let mcp_protocol::service::QuitReason::JoinError(error) = reason {
+        return Err(error.into());
+    }
+    Ok(())
 }
 
 /// Serve stdio with a maximum incoming line payload before JSON parsing.
