@@ -1,6 +1,6 @@
 [package]
 name = "klarlabs-mcp"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 rust-version = "1.89"
 publish = ["crates-io"]
@@ -33,7 +33,7 @@ stdio = ["mcp-protocol/transport-io"]
 http = ["dep:sha2", "dep:axum", "mcp-protocol/transport-streamable-http-server", "tokio/net"]
 
 [dependencies]
-mcp-protocol = { package = "klarlabs-mcp-protocol", version = "0.1.0", path = "crates/mcp-protocol", default-features = false, features = ["server", "schemars"] }
+mcp-protocol = { package = "klarlabs-mcp-protocol", version = "0.2.0", path = "crates/mcp-protocol", default-features = false, features = ["server", "schemars"] }
 schemars = "1"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
@@ -61,7 +61,7 @@ reqwest = { version = "0.13", optional = true, default-features = false, feature
 
 [dev-dependencies]
 reqwest = { version = "0.13", default-features = false, features = ["json", "stream"] }
-mcp-protocol = { package = "klarlabs-mcp-protocol", version = "0.1.0", path = "crates/mcp-protocol", default-features = false, features = ["client", "transport-async-rw"] }
+mcp-protocol = { package = "klarlabs-mcp-protocol", version = "0.2.0", path = "crates/mcp-protocol", default-features = false, features = ["client", "transport-async-rw"] }
 tokio = { version = "1", features = ["rt-multi-thread", "signal", "io-util", "test-util"] }
 
 [[example]]

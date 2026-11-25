@@ -4,8 +4,8 @@ Repository: https://github.com/klarlabs-studio/mcp-rs
 
 | Package | Rust import | Version |
 | --- | --- | --- |
-| `klarlabs-mcp` | `mcp_rs` | `0.1.0` |
-| `klarlabs-mcp-protocol` | `mcp_protocol` | `0.1.0` |
+| `klarlabs-mcp` | `mcp_rs` | `0.2.0` |
+| `klarlabs-mcp-protocol` | `mcp_protocol` | `0.2.0` |
 
 The unprefixed names are already owned by unrelated crates.io users (hyphens and
 underscores are equivalent there). Both packages restrict publication to

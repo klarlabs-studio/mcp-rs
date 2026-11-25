@@ -54,7 +54,7 @@ Rust imports remain `mcp_rs` and `mcp_protocol`. For a published release:
 
 ```toml
 [dependencies]
-mcp-rs = { package = "klarlabs-mcp", version = "0.1" }
+mcp-rs = { package = "klarlabs-mcp", version = "0.2" }
 serde = { version = "1", features = ["derive"] }
 schemars = "1"
 ```
