@@ -509,14 +509,22 @@ where
 
     let (peer, peer_rx) = Peer::new(id_provider.clone(), None);
 
-    // Discovery is a bootstrap; every ordinary request carries its own metadata.
+    // Accept either the modern discovery bootstrap or the legacy initialize
+    // handshake. The negotiated version is stored on the peer for session-mode
+    // requests; discovery remains stateless and per-request metadata based.
     loop {
-        let msg = expect_next_message(&mut transport, "modern discovery request").await?;
+        let msg = expect_next_message(&mut transport, "MCP initialization request").await?;
         match msg {
             ClientJsonRpcMessage::Request(req) => {
                 let id = req.id;
-                let mut request = match req.request {
-                    ClientRequest::InitializeRequest(_) => {
+                if matches!(req.request, ClientRequest::InitializeRequest(_)) {
+                    // A service opts in to the legacy handshake by supporting a
+                    // revision that has it; a modern-only service rejects it.
+                    if !service
+                        .supported_protocol_versions()
+                        .iter()
+                        .any(ProtocolVersion::has_initialize)
+                    {
                         return Err(report_initialize_failure(
                             &mut transport,
                             ErrorData::invalid_request(
@@ -527,8 +535,38 @@ where
                         )
                         .await);
                     }
-                    request => request,
-                };
+                    let mut request = req.request;
+                    let context = RequestContext {
+                        ct: ct.child_token(),
+                        id: id.clone(),
+                        meta: std::mem::take(request.get_meta_mut()),
+                        extensions: std::mem::take(request.extensions_mut()),
+                        peer: peer.clone(),
+                    };
+                    match service.handle_request(request, context).await {
+                        Ok(result) => transport
+                            .send(ServerJsonRpcMessage::response(result, id))
+                            .await
+                            .map_err(|error| {
+                                ServerInitializeError::transport::<T>(
+                                    error,
+                                    "sending initialize response",
+                                )
+                            })?,
+                        Err(error) => {
+                            return Err(report_initialize_failure(&mut transport, error, id).await);
+                        }
+                    }
+                    return Ok(serve_inner(
+                        service,
+                        transport,
+                        peer,
+                        peer_rx,
+                        VecDeque::new(),
+                        ct,
+                    ));
+                }
+                let mut request = req.request;
                 let missing_metadata = request
                     .get_meta()
                     .missing_required_keys(&ProtocolVersion::V_2026_07_28);

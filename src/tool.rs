@@ -81,6 +81,26 @@ impl ToolBuilder<'_> {
         );
         Ok(self)
     }
+    /// Declare an object output schema from a JSON Schema document, for servers whose
+    /// result contracts are published as schema files rather than derived from Rust types.
+    /// Successful results must provide matching structured content.
+    ///
+    /// # Errors
+    /// Returns an error if the document is not an object schema.
+    pub fn output_schema_json(mut self, schema: Value) -> Result<Self, RegistrationError> {
+        let Value::Object(object) = schema else {
+            return Err(RegistrationError::InvalidOutputSchema(
+                "output schema must be a JSON object".into(),
+            ));
+        };
+        if object.get("type").and_then(Value::as_str) != Some("object") {
+            return Err(RegistrationError::InvalidOutputSchema(
+                "output schema must describe an object".into(),
+            ));
+        }
+        self.output_schema = Some(Arc::new(object));
+        Ok(self)
+    }
     /// Skip validation of argument values against JSON Schema.
     /// Serde decoding and routing-annotation schema validation still apply.
     pub fn skip_validation(mut self) -> Self {
