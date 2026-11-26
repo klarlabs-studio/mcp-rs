@@ -11,7 +11,7 @@ description = "Typed MCP application framework ported from klarlabs-studio/mcp-g
 readme = "README.md"
 keywords = ["mcp", "model-context", "json-rpc", "ai", "async"]
 categories = ["api-bindings", "asynchronous"]
-include = ["Cargo.toml", "Cargo.lock", "LICENSE", "README.md", "UPSTREAM.md", "src/**", "examples/**", "tests/**", "proto/**"]
+include = ["/Cargo.toml", "/Cargo.lock", "/LICENSE", "/README.md", "/UPSTREAM.md", "/src/**", "/examples/**", "/tests/**", "/proto/**"]
 
 [lib]
 name = "mcp_rs"

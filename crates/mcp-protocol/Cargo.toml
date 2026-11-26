@@ -11,7 +11,7 @@ description = "Modern MCP protocol engine maintained by Klarlabs for mcp-rs"
 readme = "README.md"
 keywords = ["mcp", "model-context", "json-rpc", "async"]
 categories = ["api-bindings", "asynchronous"]
-include = ["Cargo.toml", "Cargo.lock", "README.md", "UPSTREAM.md", "UPSTREAM-LICENSE", "src/**", "tests/**"]
+include = ["/Cargo.toml", "/Cargo.lock", "/README.md", "/UPSTREAM.md", "/UPSTREAM-LICENSE", "/src/**", "/tests/**"]
 
 [lib]
 name = "mcp_protocol"
